@@ -27,7 +27,7 @@
                 </div>
 
                 <nav class="navbar">
-                    <a href="index.html">Home</a>
+                    <a href="./index.php">Home</a>
                     <a href="#exercises">Exercises</a>
                     <a href="#labs">Labs</a>
                     <a href="#projects">Projects</a>

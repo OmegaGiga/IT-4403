@@ -7,6 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>IT 4403 - Project Showcase</title>
         <link rel="stylesheet" href="css/style.css">
+        <link rel="icon" type="image/x-icon" href="./images/favicon.png">
     </head>
     <body>
         <div class="window">
@@ -52,7 +53,7 @@
                     <section id="labs">
                         <h3>Labs</h3>
                         <ul>
-                            <li>Nothing yet.</li>
+                            <li><a href="./labs/lab2.php">Lab 2</a></li>
                         </ul>
                     </section>
                     <section id="projects">

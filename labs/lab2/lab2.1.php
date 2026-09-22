@@ -45,7 +45,7 @@
                             
                             // This works because JS and jQ can coexist.
                             //document.getElementById("result2").innerHTML = "<p>x = " + x + ", y = " + y + "</p>";
-                            $("#result2").php("<p>x = " + x + ", y = " + y + "</p>");
+                            $("#result2").html("<p>x = " + x + ", y = " + y + "</p>");
                             $("#result2").append("<p>x + y = " + result1 + "</p>");
                             $("#result2").append("<p>x - y = " + (x - y) + "</p>");
                             $("#result2").append("<p>x * y = " + (x * y) + "</p>");

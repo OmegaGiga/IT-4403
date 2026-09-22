@@ -63,7 +63,7 @@
                             $(".header4-test").text("夢は…人間になることなのニャ"); //"My dream is to become human, meow." - 井上トロ
                             $("li").text("Georgia!");
 
-                            let x = $("#button1").php(); //read HTML
+                            let x = $("#button1").html(); //read HTML
                             let y = $("#button2").text(); //read text
                             $("#p1").append("<p>" + x + "</p>");
                             $("#p2").append("<p>" + y + "</p>");

@@ -1,138 +1,138 @@
-            @font-face {
-                font-family: "Noto Sans JP";
-                src: url("./fonts/NotoSansJP-VariableFont_wght.ttf") format("truetype");
-                font-weight: 100 900;
-            }
-            @font-face {
-                font-family: "Noto Serif JP";
-                src: url("./fonts/NotoSerifJP-VariableFont_wght.ttf") format("truetype");
-                font-weight: 200 900;
-            }
-            @font-face {
-                font-family: "Unifont-JP";
-                src: url("./fonts/unifont_jp-17.0.03.otf") format("opentype");
-            }
-            @font-face {
-                font-family: "KHドット日比谷32";
-                src: url("./fonts/KH-Dot-Hibiya-32.ttf") format("truetype");
-            }
-            * {
-                box-sizing: border-box;
-            }
-            body {
-                background-color: darkgray;
-                margin: 0;
-                font-family: "Noto Serif JP";
-            }
-            .window {
-                padding: 5px;
-                padding-bottom: 10px;
-                background-color: lightgray;
-                border: 1px solid gray;
-                box-shadow: 2px 2px 6px #777;
-                width: 50%;
-                margin: auto;
-                
-            }
-            @media (max-width: 1280px) {
-                .window {
-                    width: 60%;
-                }
-            }
-            @media (max-width: 1080px) {
-                .window {
-                    width: 70%;
-                }
-            }
-            @media (max-width: 900px) {
-                .window {
-                    width: 100%;
-                }
-            }
-            .window-content {
-                background-color: white;
-                padding: 12px;
-            }
-            .welcome p {
-                margin: 0;
-                margin-bottom: 10px;
-            }
-            .title-bar {
-                display: flex;
-                gap: 5px;
-                align-items: center;
-            }
-            .title-bar p {
-                margin: 0;
-                padding-left: 5px;
-            }
-            .title-bar button {
-                width: 25px;
-                border: 1px solid gray;
-                border-radius: 10px;
-            }
-            .site-heading {
-                background-color: white;
-                text-align: center;
-            }
-            .site-heading h1 {
-                font-size: 24px;
-                margin: 0;
-            }
-            .site-heading h2 {
-                font-size: 18px;
-                margin: 0;
-            }
-            .navbar {
-                background-color: #eee;
-                display: flex;
-                border-style: outset;
-                border-color: #eee;
-                border-width: 2px 2px 2px 0;
-            }
-            .navbar a {
-                flex: 1;
-                padding: 7px;
-                font-size: larger;
-                text-align: center;
-            }
-            .navbar a:hover {
-                background-color: lightgray;
-            }
-            .navbar a:active {
-                background-color: darkgray;
-            }
-            .coursework {
-                display: flex;
-                gap: 10px;
-            }
-            .coursework > section {
-                flex: 1;
-                padding: 10px;
-                background-color: #eee;
-                border: 1px solid lightgray;
-            }
-            @media (max-width: 600px) {
-                .site-heading h1 {
-                    font-size: 20px;
-                }
-                .site-heading h2 {
-                    font-size: 16px;
-                }
-                .coursework {
-                    flex-direction: column;
-                }
-                .navbar {
-                    flex-wrap: wrap;
-                }
-                .navbar a {
-                    flex: 0 0 50%;
-                }
-            }
-            .footer {
-                background-color: lightgray;
-                padding: 8px;
-            }
-            .footer p {
-                margin: 0;
-            }
+@font-face {
+    font-family: "Noto Sans JP";
+    src: url("./fonts/NotoSansJP-VariableFont_wght.ttf") format("ttf");
+    font-weight: 100 900;
+}
+@font-face {
+    font-family: "Noto Serif JP";
+    src: url("./fonts/NotoSerifJP-VariableFont_wght.ttf") format("ttf");
+    font-weight: 200 900;
+}
+@font-face {
+    font-family: "Unifont-JP";
+    src: url("./fonts/unifont_jp-17.0.03.otf") format("otf");
+}
+@font-face {
+    font-family: "KHドット日比谷32";
+    src: url("./fonts/KH-Dot-Hibiya-32.ttf") format("ttf");
+}
+* {
+    box-sizing: border-box;
+}
+body {
+    background-color: darkgray;
+    margin: 0;
+    font-family: "Noto Serif JP";
+}
+.window {
+    padding: 5px;
+    padding-bottom: 10px;
+    background-color: lightgray;
+    border: 1px solid gray;
+    box-shadow: 2px 2px 6px #777;
+    width: 50%;
+    margin: auto;
+    
+}
+@media (max-width: 1280px) {
+    .window {
+        width: 60%;
+    }
+}
+@media (max-width: 1080px) {
+    .window {
+        width: 70%;
+    }
+}
+@media (max-width: 900px) {
+    .window {
+        width: 100%;
+    }
+}
+.window-content {
+    background-color: white;
+    padding: 12px;
+}
+.welcome p {
+    margin: 0;
+    margin-bottom: 10px;
+}
+.title-bar {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+.title-bar p {
+    margin: 0;
+    padding-left: 5px;
+}
+.title-bar button {
+    width: 25px;
+    border: 1px solid gray;
+    border-radius: 10px;
+}
+.site-heading {
+    background-color: white;
+    text-align: center;
+}
+.site-heading h1 {
+    font-size: 24px;
+    margin: 0;
+}
+.site-heading h2 {
+    font-size: 18px;
+    margin: 0;
+}
+.navbar {
+    background-color: #eee;
+    display: flex;
+    border-style: outset;
+    border-color: #eee;
+    border-width: 2px 2px 2px 0;
+}
+.navbar a {
+    flex: 1;
+    padding: 7px;
+    font-size: larger;
+    text-align: center;
+}
+.navbar a:hover {
+    background-color: lightgray;
+}
+.navbar a:active {
+    background-color: darkgray;
+}
+.coursework {
+    display: flex;
+    gap: 10px;
+}
+.coursework > section {
+    flex: 1;
+    padding: 10px;
+    background-color: #eee;
+    border: 1px solid lightgray;
+}
+@media (max-width: 600px) {
+    .site-heading h1 {
+        font-size: 20px;
+    }
+    .site-heading h2 {
+        font-size: 16px;
+    }
+    .coursework {
+        flex-direction: column;
+    }
+    .navbar {
+        flex-wrap: wrap;
+    }
+    .navbar a {
+        flex: 0 0 50%;
+    }
+}
+.footer {
+    background-color: lightgray;
+    padding: 8px;
+}
+.footer p {
+    margin: 0;
+}

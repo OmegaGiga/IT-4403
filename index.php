@@ -54,6 +54,7 @@
                         <h3>Labs</h3>
                         <ul>
                             <li><a href="./labs/lab2.php">Lab 2</a></li>
+                            <li><a href="./labs/lab3.php">Lab 3</a></li>
                         </ul>
                     </section>
                     <section id="projects">

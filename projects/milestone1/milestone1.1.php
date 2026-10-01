@@ -174,38 +174,42 @@
                 <div>
                     <h3>Single Book Data</h3>
                     <h4 id="title"></h4>
-                    <p id="publisher">Publisher(s): </p>
-                    <p id="publication_date"></p>
-                    <p id="page_count"></p>
-                    <p id="isbn_10"></p>
-                    <p id="isbn_13"></p>
+
                     <div id="cover_image">
                         <p>Book Cover(s): </p>
                     </div>
-                    <p id="author">Author(s): </p>
-                    <p id="first_sentence"></p>
-                    <p id="openlibrary_record">Open Library Record: </p>
+
+                    <div id="author">
+                        <p>Author(s): </p>
+                        <ul id="author_list"></ul>
+                    </div>
+
                     <p id="contributions">Contributions: </p>
-                    <p id="language">Language(s): </p>
+                    <p id="publisher">Publisher(s): </p>
+                    <p id="publication_date"></p>
+
+                    <div id="language">
+                        <p>Language(s): </p> 
+                        <ul id="language_list"></ul>
+                    </div>
+
+                    <p id="first_sentence"></p>
+                    <p id="page_count"></p>
+                    <p id="isbn_10"></p>
+                    <p id="isbn_13"></p>
+
                     <div id="works_div">
                         <p>Works: </p>
                         <ul id="works"></ul>
                     </div>
                     
+                    <p id="openlibrary_record">Open Library Record: </p>
 
                     <script type="text/javascript">
                         $(document).ready(function() {
                             $.getJSON("../../json/openlibrary-book.json", function(data){
                                 $("#title").html(data.title);
-                                
-                                for (let i = 0; i < data.publishers.length; i++) {
-                                    if (i < data.publishers.length - 1) {
-                                        $("#publisher").append(data.publishers[i] + ", ");
-                                    } else {
-                                        $("#publisher").append(data.publishers[i]);
-                                    }
-                                }
-
+                                $("#publisher").append(data.publishers.join(", "));
                                 $("#publication_date").html("Publication Date: " + data.publish_date);
                                 $("#page_count").html("Page Count: " + data.number_of_pages);
                                 $("#isbn_10").html("ISBN-10: " + data.isbn_10);
@@ -223,11 +227,7 @@
 
                                 for (let i = 0; i < data.authors.length; i++) {
                                     $.getJSON("https://openlibrary.org" + data.authors[i].key + ".json", function (authorData) {
-                                        if(i < data.authors.length - 1) {
-                                            $("#author").append(authorData.name + ", ");
-                                        } else {
-                                            $("#author").append(authorData.name);
-                                        }
+                                        $("#author_list").append("<li>" + authorData.name + "</li>");
                                     });
                                 }
 
@@ -236,21 +236,11 @@
                                 $("#openlibrary_record").append("<a href='https://openlibrary.org" + data.key 
                                 + "' target='_blank'>https://openlibrary.org" + data.key + "</a>");
                                 
-                                for (let i = 0; i < data.contributions.length; i++) {
-                                    if (i < data.contributions.length - 1) {
-                                        $("#contributions").append(data.contributions[i] + ", ");
-                                    } else {
-                                        $("#contributions").append(data.contributions[i]);
-                                    }
-                                }
+                                $("#contributions").append(data.contributions.join(", "));
 
                                 for (let i = 0; i < data.languages.length; i++) {
                                     $.getJSON("https://openlibrary.org" + data.languages[i].key + ".json", function(languageData) {
-                                        if (i < data.languages.length - 1) {
-                                            $("#language").append(languageData.name + ", ");
-                                        } else {
-                                            $("#language").append(languageData.name);
-                                        }
+                                        $("#language_list").append("<li>" + languageData.name + "</li>");
                                     });
                                 }
 

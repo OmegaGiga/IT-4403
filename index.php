@@ -60,7 +60,7 @@
                     <section id="projects">
                         <h3>Projects</h3>
                         <ul>
-                            <li>Nothing yet.</li>
+                            <li><a href="./projects/milestone1.php">Project Milestone 1</a></li>
                         </ul>
                     </section>
                 </div>

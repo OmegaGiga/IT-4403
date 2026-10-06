@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en-us">
+        <meta charset="UTF-8">
+        <meta name="author" content="Leonardo Mendez-Rivera">
+        <meta name="description" content="Site for showcasing IT 4403 labs, exercises, and projects.">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>IT 4403 - Project Showcase :: Lab 5 :: Page 1</title>
+        <link rel="stylesheet" href="../../css/style.css">
+        <link rel="icon" type="image/x-icon" href="../../images/favicon.png">
+        <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    </head>
+    <body>
+        <div class="window">
+            <header>
+                <div class="title-bar">
+                    <button type="button">x</button>
+                    <button type="button">-</button>
+                    <button type="button">+</button>
+                    <p>Lab 5: Page 1</p>
+                </div>
+
+                <hr>
+
+                <div class="site-heading">
+                    <h1>Lab 5: Page 1</h1>
+                </div>
+
+                <nav class="navbar">
+                    <a href="../../index.html">Home</a>
+                </nav>
+            </header>
+            
+            <main class="window-content">
+                <div>
+                    <h3>Display Search Results Using JavaScript</h3>
+                    <div id="book_list"></div>
+
+                    <script type="text/javascript">
+                        $(document).ready(function() {
+                            fetch("https://openlibrary.org/search.json?q=data%20analysis&limit=10")
+                                .then(response => response.json())
+                                .then(data => {
+                                    for (let i = 0; i < data.docs.length; i++) {
+                                        let book = $("<section>");
+                                        let title = $("<p>");
+                                        let first_publish_year = $("<p>");
+                                        let no_publish_year = $("<p>");
+                                        
+                                        title.html("Title: " + data.docs[i].title);
+                                        first_publish_year.html("First Publication Year: " + data.docs[i].first_publish_year);
+                                        no_publish_year.html("Year unavailable");
+
+                                        if (data.docs[i].title) {
+                                            book.append(title);
+                                        }
+                                        if (data.docs[i].first_publish_year) {
+                                            book.append(first_publish_year);
+                                        } else {
+                                            book.append(no_publish_year);
+                                        }
+                                        
+
+                                        $("#book_list").append(book);
+                                        if (i < data.docs.length - 1) {
+                                            $("#book_list").append("<br>");
+                                        }
+                                    }
+                                });
+                        });
+                    </script>
+                </div>
+            </main>
+
+            <hr>
+            
+            <footer class="footer">
+                <p><a href="https://campus.kennesaw.edu/colleges-departments/ccse/academics/information-technology/" target="_blank">
+                    CCSE Department of IT Website</a> | 
+                    Disclaimer: This is a student website created for course projects in IT 4403.</p>
+            </footer>
+        </div>
+    </body>
+</html>

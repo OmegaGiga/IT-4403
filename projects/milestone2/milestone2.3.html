@@ -39,6 +39,7 @@
                     
                     <script type="text/javascript">
                         $(document).ready(function() {
+                            // my chosen books
                             let book_array = [
                                 "/works/OL120544W",
                                 "/works/OL3361920W",
@@ -46,13 +47,16 @@
                                 "/works/OL2566044W"
                             ];
 
+                            // loops through the book array to display book info
                             for (let i = 0; i < book_array.length; i++) {
+                                 // work_id is of format /works/[ID]
                                 let work_url = "https://openlibrary.org"
                                 + book_array[i]
                                 + ".json";
 
+                                // fetch json file using work id
                                 fetch(work_url)
-                                .then(response => {
+                                .then(response => { // check response
                                     if (!response.ok) {
                                         throw new Error("HTTP error: " + response.status);
                                     }
@@ -62,7 +66,11 @@
                                     let title = $("<h4>");
                                     let cover_image = $("<img>");
 
-                                    title.html("<a href='./milestone2.2.html?work_id=" + book_array[i] + "'>" + data.title + "</a>");
+                                    // title is a link that carries a query for page 2 (book details)
+                                    title.html("<a href='./milestone2.2.html?work_id=" 
+                                    + book_array[i] + "'>" 
+                                    + data.title 
+                                    + "</a>");
                                 
                                     if (data.covers) {
                                         cover_image.attr("src", "https://covers.openlibrary.org/b/id/" 
@@ -70,6 +78,7 @@
                                             + "-M.jpg");
                                     }
 
+                                    // determines if an element should be on the page
                                     if (data.title) {
                                         $("#book_details").append(title);
                                     }
@@ -79,7 +88,7 @@
                                         $("#book_details").append("<p>Cover image unavailable.</p>");
                                     }
                                 })
-                                .catch(error => {
+                                .catch(error => { // error catch for failed requests
                                     $("#search_results").empty();
                                     $("#search_results").append("<p>Failed to retrieve a book.</p>");
                                 });

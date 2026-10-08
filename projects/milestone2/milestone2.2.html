@@ -39,12 +39,16 @@
                     
                     <script type="text/javascript">
                         $(document).ready(function() {
+                            // obtain the page query
                             let params = new URLSearchParams(window.location.search);
                             let work_id = params.get("work_id");
+
                             // work_id is of format /works/[ID]
                             let work_url = "https://openlibrary.org" + work_id + ".json";
+
+                            // fetch json file using work id
                             fetch(work_url)
-                            .then(response => {
+                            .then(response => { // check response
                                 if (!response.ok) {
                                     throw new Error("HTTP error: " + response.status);
                                 }
@@ -58,18 +62,19 @@
                                 let cover_image = $("<img>");
                                 let openlibrary_page = $("<p>");
                                 
-                                let subjects_array = [];
+                                let subjects_array = []; // store subjects in array for limiting to 10 later
 
                                 title.text(data.title);
                                 work.text("Work ID: " + data.key.replace("/works/", ""));
                                 
+                                // handles "description" as a text value or object
                                 if (typeof data.description === "string") {
                                     description.text("Description: " + data.description);
                                 } else if (data.description && typeof data.description === "object") {
                                     description.text("Description: " + data.description.value);
                                 }
 
-
+                                // lists book subjects; max 10 subjects
                                 if (data.subjects) {
                                     for (let i = 0; i < data.subjects.length; i++) {
                                         subjects_array.push(data.subjects[i]);
@@ -89,6 +94,7 @@
 
                                 openlibrary_page.html("<a href='https://openlibrary.org" + work_id + "' target='_blank'>Open Library Book page</a>");
 
+                                // determines if an element should be on the page
                                 if (data.title) {
                                     $("#book_details").append(title);
                                 }
@@ -111,7 +117,7 @@
 
                                 $("#book_details").append(openlibrary_page);
                             })
-                            .catch(error => {
+                            .catch(error => { // error catch for failed requests
                                 $("#search_results").empty();
                                 $("#search_results").append("<p>Failed to retrieve book details.</p>");
                             });

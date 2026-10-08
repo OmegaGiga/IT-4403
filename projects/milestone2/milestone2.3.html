@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en-us">
+        <meta charset="UTF-8">
+        <meta name="author" content="Leonardo Mendez-Rivera">
+        <meta name="description" content="Site for showcasing IT 4403 labs, exercises, and projects.">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>IT 4403 - Project Showcase :: Project Milestone 2 :: Page 3</title>
+        <link rel="icon" type="image/x-icon" href="../../images/favicon.png">
+        <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+        <link rel="stylesheet" href="../milestone2-stylesheet.css">
+    </head>
+    <body>
+        <div class="window">
+            <header>
+                <div class="title-bar">
+                    <button type="button">x</button>
+                    <button type="button">-</button>
+                    <button type="button">+</button>
+                    <p>Project Milestone 2: Page 3</p>
+                </div>
+
+                <hr>
+
+                <div class="site-heading">
+                    <h1>Project Milestone 2: Page 3</h1>
+                </div>
+
+                <nav class="navbar">
+                    <a href="../milestone2/milestone2.1.html">Home (Book Search)</a>
+                    <a href="../milestone2/milestone2.3.html">My Bookshelf</a>
+                </nav>
+            </header>
+            
+            <main class="window-content">
+                <div>
+                    <h3>My bookshelf Page</h3>
+                    <section id="book_details"></section>
+                    
+                    <script type="text/javascript">
+                        $(document).ready(function() {
+                            let book_array = [
+                                "/works/OL120544W",
+                                "/works/OL3361920W",
+                                "/works/OL6817160W",
+                                "/works/OL2566044W"
+                            ];
+
+                            for (let i = 0; i < book_array.length; i++) {
+                                let work_url = "https://openlibrary.org"
+                                + book_array[i]
+                                + ".json";
+
+                                fetch(work_url)
+                                .then(response => {
+                                    if (!response.ok) {
+                                        throw new Error("HTTP error: " + response.status);
+                                    }
+                                    return response.json();
+                                })
+                                .then(data => {
+                                    let title = $("<h4>");
+                                    let cover_image = $("<img>");
+
+                                    title.html("<a href='./milestone2.2.html?work_id=" + book_array[i] + "'>" + data.title + "</a>");
+                                
+                                    if (data.covers) {
+                                        cover_image.attr("src", "https://covers.openlibrary.org/b/id/" 
+                                            + data.covers[0] 
+                                            + "-M.jpg");
+                                    }
+
+                                    if (data.title) {
+                                        $("#book_details").append(title);
+                                    }
+                                    if (data.covers) {
+                                        $("#book_details").append(cover_image);
+                                    } else {
+                                        $("#book_details").append("<p>Cover image unavailable.</p>");
+                                    }
+                                })
+                                .catch(error => {
+                                    $("#search_results").empty();
+                                    $("#search_results").append("<p>Failed to retrieve a book.</p>");
+                                });
+                            }
+                        });
+                    </script>
+                </div>
+            </main>
+
+            <hr>
+            
+            <footer class="footer">
+                <p><a href="https://campus.kennesaw.edu/colleges-departments/ccse/academics/information-technology/" target="_blank">
+                    CCSE Department of IT Website</a> | 
+                    Disclaimer: This is a student website created for course projects in IT 4403.</p>
+            </footer>
+        </div>
+    </body>
+</html>

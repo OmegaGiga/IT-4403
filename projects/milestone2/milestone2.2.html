@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en-us">
+        <meta charset="UTF-8">
+        <meta name="author" content="Leonardo Mendez-Rivera">
+        <meta name="description" content="Site for showcasing IT 4403 labs, exercises, and projects.">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>IT 4403 - Project Showcase :: Project Milestone 2 :: Page 2</title>
+        <link rel="icon" type="image/x-icon" href="../../images/favicon.png">
+        <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+        <link rel="stylesheet" href="../milestone2-stylesheet.css">
+    </head>
+    <body>
+        <div class="window">
+            <header>
+                <div class="title-bar">
+                    <button type="button">x</button>
+                    <button type="button">-</button>
+                    <button type="button">+</button>
+                    <p>Project Milestone 2: Page 2</p>
+                </div>
+
+                <hr>
+
+                <div class="site-heading">
+                    <h1>Project Milestone 2: Page 2</h1>
+                </div>
+
+                <nav class="navbar">
+                    <a href="../milestone2/milestone2.1.html">Home (Book Search)</a>
+                    <a href="../milestone2/milestone2.3.html">My Bookshelf</a>
+                </nav>
+            </header>
+            
+            <main class="window-content">
+                <div>
+                    <h3>Book Details Page</h3>
+                    <section id="book_details"></section>
+                    
+                    <script type="text/javascript">
+                        $(document).ready(function() {
+                            let params = new URLSearchParams(window.location.search);
+                            let work_id = params.get("work_id");
+                            // work_id is of format /works/[ID]
+                            let work_url = "https://openlibrary.org" + work_id + ".json";
+                            fetch(work_url)
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error("HTTP error: " + response.status);
+                                }
+                                return response.json();
+                            })
+                            .then(data => {
+                                let title = $("<h4>");
+                                let work = $("<p>");
+                                let description = $("<p>");
+                                let subjects = $("<p>");
+                                let cover_image = $("<img>");
+                                let openlibrary_page = $("<p>");
+                                
+                                let subjects_array = [];
+
+                                title.text(data.title);
+                                work.text("Work ID: " + data.key.replace("/works/", ""));
+                                
+                                if (typeof data.description === "string") {
+                                    description.text("Description: " + data.description);
+                                } else if (data.description && typeof data.description === "object") {
+                                    description.text("Description: " + data.description.value);
+                                }
+
+
+                                if (data.subjects) {
+                                    for (let i = 0; i < data.subjects.length; i++) {
+                                        subjects_array.push(data.subjects[i]);
+                                        if (i == 9) {
+                                            break;
+                                        }
+                                    }
+                                }
+
+                                subjects.text("Subjects: " + subjects_array.join(", "));
+                                
+                                if (data.covers) {
+                                    cover_image.attr("src", "https://covers.openlibrary.org/b/id/" 
+                                        + data.covers[0] 
+                                        + "-M.jpg");
+                                }
+
+                                openlibrary_page.html("<a href='https://openlibrary.org" + work_id + "' target='_blank'>Open Library Book page</a>");
+
+                                if (data.title) {
+                                    $("#book_details").append(title);
+                                }
+                                if (data.covers) {
+                                    $("#book_details").append(cover_image);
+                                } else {
+                                    $("#book_details").append("<p>Cover image unavailable.</p>");
+                                }
+                                if (data.description) {
+                                    $("#book_details").append(description);
+                                } else {
+                                    $("#book_details").append("<p>Description unavailable.</p>");
+                                }
+                                if (data.subjects) {
+                                    $("#book_details").append(subjects);
+                                }
+                                if (data.key) {
+                                    $("#book_details").append(work);
+                                }
+
+                                $("#book_details").append(openlibrary_page);
+                            })
+                            .catch(error => {
+                                $("#search_results").empty();
+                                $("#search_results").append("<p>Failed to retrieve book details.</p>");
+                            });
+                        });
+                    </script>
+                </div>
+            </main>
+
+            <hr>
+            
+            <footer class="footer">
+                <p><a href="https://campus.kennesaw.edu/colleges-departments/ccse/academics/information-technology/" target="_blank">
+                    CCSE Department of IT Website</a> | 
+                    Disclaimer: This is a student website created for course projects in IT 4403.</p>
+            </footer>
+        </div>
+    </body>
+</html>

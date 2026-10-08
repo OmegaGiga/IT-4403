@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en-us">
+        <meta charset="UTF-8">
+        <meta name="author" content="Leonardo Mendez-Rivera">
+        <meta name="description" content="Site for showcasing IT 4403 labs, exercises, and projects.">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>IT 4403 - Project Showcase :: Project Milestone 2 :: Page 1</title>
+        <link rel="icon" type="image/x-icon" href="../../images/favicon.png">
+        <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+        <link rel="stylesheet" href="../milestone2-stylesheet.css">
+    </head>
+    <body>
+        <div class="window">
+            <header>
+                <div class="title-bar">
+                    <button type="button">x</button>
+                    <button type="button">-</button>
+                    <button type="button">+</button>
+                    <p>Project Milestone 2: Page 1</p>
+                </div>
+
+                <hr>
+
+                <div class="site-heading">
+                    <h1>Project Milestone 2: Page 1</h1>
+                </div>
+
+                <nav class="navbar">
+                    <a href="../milestone2/milestone2.1.html">Home (Book Search)</a>
+                    <a href="../milestone2/milestone2.3.html">My Bookshelf</a>
+                </nav>
+            </header>
+            
+            <main class="window-content">
+                <div>
+                    <h3>Book Search Page</h3>
+                    <form>
+                        <label>Enter a search term, page number, and number of results per page (1-60): </label><br>
+                        <input type="text" id="search_term" name="search_term">
+                        
+                        <br>
+                        
+                        <input type="radio" id="page_one" value="1" name="page_number" checked>
+                        <label for="page_one">1</label>
+                        <input type="radio" id="page_two" value="2" name="page_number">
+                        <label for="page_two">2</label>
+                        <input type="radio" id="page_three" value="3" name="page_number">
+                        <label for="page_three">3</label>
+                        <input type="radio" id="page_four" value="4" name="page_number">
+                        <label for="page_four">4</label>
+                        
+                        <br>
+                        
+                        <input type="range" id="results_number" name="results_number" min="1" max="60" value="10">
+                        <output id="range_value" for="results_number">10</output>
+                        
+                        <br>
+                        
+                        <button type="button" id="search">Search</button>
+                    </form>
+
+                    <section id="search_results"></section>
+                    
+                    <script type="text/javascript">
+                        $(document).ready(function() {
+                            let user_search_term, json_url = "";
+                            let user_results_number, user_page_number = 0;
+
+                            function book_search() {
+                                let json_url = "https://openlibrary.org/search.json?q=" 
+                                    + encodeURIComponent(user_search_term) 
+                                    + "&limit=" 
+                                    + user_results_number 
+                                    + "&page=" 
+                                    + user_page_number;
+                                
+                                fetch(json_url)
+                                    .then(response => {
+                                        if (!response.ok) {
+                                            throw new Error("HTTP error: " + response.status);
+                                        }
+                                        return response.json();
+                                    })
+                                    .then(data => {
+                                        $("#search_results").empty(); // clears the results list
+                                        
+                                        if (data.detail) { // when the API returns an error, there is no docs array
+                                            $("#search_results").append("<p>The API returned an error.<p>");
+                                        } else if (data.numFound === 0) { // numFound can also be found with the docs array, but if numFound is 0, the search term could not provide results
+                                            $("#search_results").append("<p>No results found.<p>");
+                                        } else if (data.docs.length === 0) { // for when there are search results, but the user has selected a page with no results
+                                            $("#search_results").append("<p>No results available on this page.</p>");
+                                        } else if (data.docs) { // assumes the docs array is present and populated
+                                            // loops through the docs array to extract book title and cover image if available
+                                            for (let i = 0; i < data.docs.length; i++) {
+                                                let title = $("<h4>");
+                                                let cover_image = $("<img>");
+                                                
+                                                let cover_image_url = "https://covers.openlibrary.org/b/id/" 
+                                                + data.docs[i].cover_i 
+                                                + "-S.jpg"; // uses small covers only
+                                                
+                                                let work = data.docs[i].key;
+
+                                                title.html("<a href='./milestone2.2.html?work_id=" + work + "'>" + data.docs[i].title + "</a>");
+
+                                                cover_image.attr("src", cover_image_url).attr("alt", "Cover of " 
+                                                + data.docs[i].title);
+                                                
+                                                if (data.docs[i].title) { // if the title is unavailable, the cover is also assumed unavailable
+                                                    $("#search_results").append(title);
+                                                }
+                                                if (data.docs[i].cover_i) { // if the cover image is unavailable, tell the user
+                                                    $("#search_results").append(cover_image);
+                                                } else {
+                                                    $("#search_results").append("<p>Cover image unavailable.</p>");
+                                                }
+                                                if (i < data.docs.length - 1) { // formatting
+                                                    $("#search_results").append("<br>");
+                                                }
+                                            }
+                                        } 
+                                    })
+                                    .catch(error => {
+                                        $("#search_results").empty();
+                                        $("#search_results").append("<p>Failed to retrieve search results.</p>");
+                                    });
+                            }
+
+                            // allows the user to see what value is selected on the results number slider
+                            $("#results_number").on("input", function() {
+                                $("#range_value").text($(this).val());
+                            });
+
+                            // obtains the values of user input and performs the search
+                            $("#search").click(function() {
+                                user_search_term = $("#search_term").val();
+                                user_results_number = $("#results_number").val();
+
+                                // resets the page number to 1 after a search is submitted
+                                user_page_number = 1;
+                                $("#page_one").prop("checked", true);
+
+                                // a search is performed only if the search term has been entered
+                                if (user_search_term) {
+                                    book_search();
+                                } else { // if the text box is empty
+                                    $("#search_results").empty();
+                                    $("#search_results").append("<p>Please enter a search term.</p>")
+                                }
+                            });
+
+                            // after a search is submitted, the user can switch between pages without submitting a new search
+                            $('input[name="page_number"]').change(function() {
+                                user_page_number = $(this).val();
+
+                                // automatic page switching is permitted only if a search term has been submitted
+                                if (user_search_term) {
+                                    book_search();
+                                }
+                            });
+
+                            // allows the user to change the number of results displayed on the page without submitting a new search
+                            $("#results_number").change(function() {
+                                user_results_number = $(this).val();
+
+                                // changing the number of search results to display is only permitted once a search term has been submitted
+                                if (user_search_term) {
+                                    book_search();
+                                }
+                            });
+                        });
+                    </script>
+                </div>
+            </main>
+
+            <hr>
+            
+            <footer class="footer">
+                <p><a href="https://campus.kennesaw.edu/colleges-departments/ccse/academics/information-technology/" target="_blank">
+                    CCSE Department of IT Website</a> | 
+                    Disclaimer: This is a student website created for course projects in IT 4403.</p>
+            </footer>
+        </div>
+    </body>
+</html>
